@@ -2,7 +2,7 @@
 	"name": "constellation-lib",
 	"version-string": "0.0.1",
 	"description": "Portable C++ toolbox library: math types and containers shared across projects.",
-	"homepage": "https://github.com/Mightysmallfry/constellation",
+	"homepage": "https://github.com/Mightysmallfry/Constellation",
 	"license": "MIT",
 	"dependencies": [
 		"catch2"
