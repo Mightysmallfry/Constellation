@@ -4,75 +4,90 @@
 
 namespace constellation
 {
-    const Vector2 Vector2::ZERO = Vector2(0.0f, 0.0f);
-    const Vector2 Vector2::ONE = Vector2(1.0f, 1.0f);
+    template <typename T> const Vector2<T> Vector2<T>::ZERO = Vector2<T>(T(0), T(0));
+    template <typename T> const Vector2<T> Vector2<T>::ONE = Vector2<T>(T(1), T(1));
 
-    Vector2::Vector2(float x, float y)
+    template <typename T>
+    Vector2<T>::Vector2(T x, T y)
         : X(x), Y(y)
     {
     }
 
-    Vector2 Vector2::operator+(const Vector2& other) const
+    template <typename T>
+    Vector2<T> Vector2<T>::operator+(const Vector2<T>& other) const
     {
-        return Vector2(X + other.X, Y + other.Y);
+        return Vector2<T>(X + other.X, Y + other.Y);
     }
 
-    Vector2 Vector2::operator-(const Vector2& other) const
+    template <typename T>
+    Vector2<T> Vector2<T>::operator-(const Vector2<T>& other) const
     {
-        return Vector2(X - other.X, Y - other.Y);
+        return Vector2<T>(X - other.X, Y - other.Y);
     }
 
-    Vector2 Vector2::operator*(float scalar) const
+    template <typename T>
+    Vector2<T> Vector2<T>::operator*(T scalar) const
     {
-        return Vector2(X * scalar, Y * scalar);
+        return Vector2<T>(X * scalar, Y * scalar);
     }
 
-    Vector2& Vector2::operator+=(const Vector2& other)
+    template <typename T>
+    Vector2<T>& Vector2<T>::operator+=(const Vector2<T>& other)
     {
         X += other.X;
         Y += other.Y;
         return *this;
     }
 
-    Vector2& Vector2::operator-=(const Vector2& other)
+    template <typename T>
+    Vector2<T>& Vector2<T>::operator-=(const Vector2<T>& other)
     {
         X -= other.X;
         Y -= other.Y;
         return *this;
     }
 
-    float Vector2::LengthSquared() const
+    template <typename T>
+    T Vector2<T>::LengthSquared() const
     {
         return X * X + Y * Y;
     }
 
-    float Vector2::Length() const
+    template <typename T>
+    T Vector2<T>::Length() const
     {
         return std::sqrt(LengthSquared());
     }
 
-    Vector2 Vector2::Normalized() const
+    template <typename T>
+    Vector2<T> Vector2<T>::Normalized() const
     {
-        const float len = Length();
-        if (len <= 0.0f)
+        const T len = Length();
+        if (len <= T(0))
         {
-            return Vector2::ZERO;
+            return Vector2<T>::ZERO;
         }
-        return Vector2(X / len, Y / len);
+        return Vector2<T>(X / len, Y / len);
     }
 
-    void Vector2::Normalize()
+    template <typename T>
+    void Vector2<T>::Normalize()
     {
         *this = Normalized();
     }
 
-    float Vector2::Dot(const Vector2& a, const Vector2& b)
+    template <typename T>
+    T Vector2<T>::Dot(const Vector2<T>& a, const Vector2<T>& b)
     {
         return a.X * b.X + a.Y * b.Y;
     }
 
-    Vector2 Vector2::Lerp(const Vector2& a, const Vector2& b, float t)
+    template <typename T>
+    Vector2<T> Vector2<T>::Lerp(const Vector2<T>& a, const Vector2<T>& b, T t)
     {
         return a + (b - a) * t;
     }
+
+    template class Vector2<float>;
+    template class Vector2<double>;
 }
