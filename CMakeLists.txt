@@ -14,7 +14,7 @@ set(CONSTELLATION_SOURCES
 add_library(Constellation STATIC ${CONSTELLATION_SOURCES})
 
 target_include_directories(Constellation PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Constellation
 )
 
 target_compile_features(Constellation PUBLIC cxx_std_20)
