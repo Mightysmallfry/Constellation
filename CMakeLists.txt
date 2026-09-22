@@ -9,6 +9,7 @@ set(CONSTELLATION_SOURCES
     src/Math/Vector3.cpp
     src/Math/MathUtils.cpp
     src/Containers/Handle.cpp
+    src/Parsers/StepFileParser.cpp
 )
 
 add_library(Constellation STATIC ${CONSTELLATION_SOURCES})
@@ -18,6 +19,23 @@ target_include_directories(Constellation PUBLIC
 )
 
 target_compile_features(Constellation PUBLIC cxx_std_20)
+
+# OpenCASCADE is only needed to *build* StepFileParser.cpp. StepFileParser.h
+# forward-declares the OCCT types it uses (Bnd_Box, TopoDS_Solid) instead of
+# including OCCT headers, so nothing in Constellation's public interface
+# exposes OCCT. PRIVATE keeps OCCT's include dirs off of every consumer of
+# Constellation (e.g. Aquarius) -- they only ever see plain std types and
+# Constellation's own headers.
+find_package(OpenCASCADE CONFIG REQUIRED)
+
+target_link_libraries(Constellation PRIVATE
+    TKDESTEP     # STEP reading
+    TKernel    # core OCCT types
+    TKBRep     # B-rep topology (TopoDS_*)
+    TKMesh     # BRepMesh_IncrementalMesh, Poly_Triangulation
+    TKTopAlgo  # TopExp_Explorer and related topology algorithms
+    TKMath     # gp_Pnt, gp_Trsf, gp_Vec
+)
 
 # Keep warnings loud so portability issues surface early, on both compilers
 # this is expected to build with (MSVC on Windows, GCC/Clang on Linux).

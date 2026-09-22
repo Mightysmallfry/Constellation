@@ -5,6 +5,7 @@
 	"homepage": "https://github.com/Mightysmallfry/Constellation",
 	"license": "MIT",
 	"dependencies": [
-		"catch2"
+		"catch2",
+		"opencascade"
 	]
 }

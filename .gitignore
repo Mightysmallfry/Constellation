@@ -6,3 +6,4 @@
 callgrind.out.*
 profile.txt
 .clang-format
+/tests/StepFiles/
