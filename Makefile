@@ -1,12 +1,11 @@
-.PHONY: configure build test clean rebuild
-
+PRESET ?= default
 BUILD_DIR := build
 
-configure:
-	cmake --preset default
+.PHONY: build test clean rebuild
 
-build: configure
-	cmake --build $(BUILD_DIR) -j$(shell nproc)
+build:
+	cmake --preset $(PRESET)
+	cmake --build $(BUILD_DIR)
 
 test: build
 	ctest --test-dir $(BUILD_DIR) --output-on-failure
@@ -14,4 +13,4 @@ test: build
 clean:
 	rm -rf $(BUILD_DIR)
 
-rebuild: clean configure build
+rebuild: clean build
